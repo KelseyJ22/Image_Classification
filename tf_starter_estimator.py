@@ -1,3 +1,5 @@
+# https://www.kaggle.com/fuzzyfroghunter/getting-started-with-tensorflow
+
 import tensorflow as tf
 
 import csv
@@ -9,7 +11,7 @@ tf.logging.set_verbosity(tf.logging.ERROR)
 
 TRAIN_FILE = './data/fashion-mnist_train.csv'
 TEST_FILE = './data/fashion-mnist_test.csv'
-MODEL_DIR = './softmax-model' # TODO: update this directory with new models I try
+MODEL_DIR = './estimator-model'
 feature_columns = [tf.feature_column.numeric_column('pixels', shape=[28,28])]
 
 classifier = tf.estimator.LinearClassifier(
