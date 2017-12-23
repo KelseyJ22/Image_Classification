@@ -1,0 +1,12 @@
+TODOs
+- read in data properly
+- baseline scipy classifiers -- particularly KNN (try with L1 and L2)
+- try with both full color and also greyscaled
+- neural networks: flattened softmax, then full square CNN
+- PCA, SVD, random projections and see how compressed the image can be before the classifier fails
+
+
+REFERENCES
+https://www.kaggle.com/fuzzyfroghunter/getting-started-with-tensorflow (how to load data)
+https://www.tensorflow.org/get_started/mnist/pros#load_mnist_data (TensorFlow CNN example)
+https://github.com/rdcolema/tensorflow-image-classification/blob/master/cnn.ipynb (another example)
