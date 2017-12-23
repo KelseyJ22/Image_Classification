@@ -5,28 +5,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-
 tf.logging.set_verbosity(tf.logging.ERROR)
 
-
-def pre_process_image(image):
-    # flip some images
-    image = tf.image.random_flip_left_right(image)
-    
-    # randomly adjust hue, contrast and saturation
-    image = tf.image.random_hue(image, max_delta=0.05)
-    image = tf.image.random_contrast(image, lower=0.3, upper=1.0)
-    image = tf.image.random_brightness(image, max_delta=0.2)
-    image = tf.image.random_saturation(image, lower=0.0, upper=2.0)
-
-    # limit pixel between [0, 1] in case of overflow
-    image = tf.minimum(image, 1.0)
-    image = tf.maximum(image, 0.0)
-
-    return image
-
-TRAIN_FILE = '../input/fashion-mnist_train.csv'
-TEST_FILE = '../input/fashion-mnist_test.csv'
+TRAIN_FILE = './data/fashion-mnist_train.csv'
+TEST_FILE = './data/fashion-mnist_test.csv'
 MODEL_DIR = './softmax-model' # TODO: update this directory with new models I try
 feature_columns = [tf.feature_column.numeric_column('pixels', shape=[28,28])]
 
@@ -35,7 +17,6 @@ classifier = tf.estimator.LinearClassifier(
     n_classes=10,
     model_dir=MODEL_DIR
 )
-
 
 def generate_labelled_input_fn(csv_files, batch_size):
     def input_fn():
