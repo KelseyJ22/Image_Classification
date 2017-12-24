@@ -35,13 +35,4 @@ def read_from_csv(one_hot, filename):
         return features, labels_original
 
 
-features, labels = read_from_csv(True, './data/fashion-mnist_train.csv')
-
-print labels.shape
-data = pd.read_csv('./data/fashion-mnist_train.csv', delimiter=',', header = 0)
-
-data = data.iloc[:,1:] # get image of size 28x28 from cloumn 1-785
-print data.shape
-#data = data.values
-#plt.imshow(np.reshape(data[10], (28,28)), cmap='gray_r')
-#plt.show()
+features, labels = read_from_csv(False, './data/fashion-mnist_train.csv')

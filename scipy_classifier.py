@@ -27,37 +27,37 @@ print(metrics.classification_report(labels[-100:], log_reg_pred))
 print(metrics.confusion_matrix(labels[-100:], log_reg_pred))
 
 """
-naive_bayes.fit(train_data, dense)
+naive_bayes.fit(features[:-100], labels[:-100])
 print(naive_bayes)
-nb_pred = naive_bayes.predict(test_data)
+nb_pred = naive_bayes.predict(features[-100:])
 print 'Naive Bayes Results:'
 print '- - - - - - - - - - - - - - - - - - - - - - - - - - - -'
-print(metrics.classification_report(expected, nb_pred))
-print(metrics.confusion_matrix(expected, nb_pred))
+print(metrics.classification_report(labels[-100:], nb_pred))
+print(metrics.confusion_matrix(labels[-100:], nb_pred))
 
 
-knn.fit(train_data, dense)
+knn.fit(features[:-100], labels[:-100])
 print(knn)
-knn_pred = knn.predict(test_data)
+knn_pred = knn.predict(features[-100:])
 print 'K-Nearest Neighbors Results:'
 print '- - - - - - - - - - - - - - - - - - - - - - - - - - - -'
-print(metrics.classification_report(expected, knn_pred))
-print(metrics.confusion_matrix(expected, knn_pred))
+print(metrics.classification_report(labels[-100:], knn_pred))
+print(metrics.confusion_matrix(labels[-100:], knn_pred))
 
 
-decision_tree.fit(train_data, dense)
+decision_tree.fit(features[:-100], labels[:-100])
 print(decision_tree)
-dec_tree_pred = decision_tree.predict(test_data)
+dec_tree_pred = decision_tree.predict(features[-100:])
 print 'Decision Tree Results:'
 print '- - - - - - - - - - - - - - - - - - - - - - - - - - - -'
-print(metrics.classification_report(expected, dec_tree_pred))
-print(metrics.confusion_matrix(expected, dec_tree_pred))
+print(metrics.classification_report(labels[-100:], dec_tree_pred))
+print(metrics.confusion_matrix(labels[-100:], dec_tree_pred))
 
 
-svm.fit(train_data, dense)
+svm.fit(features[:-100], labels[:-100])
 print(svm)
-svm_pred = svm.predict(test_data)
+svm_pred = svm.predict(features[-100:])
 print 'Support Vector Machine Results:'
 print '- - - - - - - - - - - - - - - - - - - - - - - - - - - -'
-print(metrics.classification_report(expected, svm_pred))
-print(metrics.confusion_matrix(expected, svm_pred))"""
+print(metrics.classification_report(labels[-100:], svm_pred))
+print(metrics.confusion_matrix(labels[-100:], svm_pred))"""
