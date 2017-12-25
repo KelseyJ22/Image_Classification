@@ -9,10 +9,10 @@ import utils
 import numpy as np
 
 log_reg = LogisticRegression()
-#naive_bayes = GaussianNB()
-#knn = KNeighborsClassifier()
-#decision_tree = DecisionTreeClassifier()
-#svm = SVC()
+naive_bayes = GaussianNB()
+knn = KNeighborsClassifier()
+decision_tree = DecisionTreeClassifier()
+svm = SVC()
 
 print 'reading data...'
 features, labels = utils.read_from_csv(one_hot = False, filename = './data/fashion-mnist_train.csv')
@@ -26,7 +26,7 @@ print '- - - - - - - - - - - - - - - - - - - - - - - - - - - -'
 print(metrics.classification_report(labels[-100:], log_reg_pred))
 print(metrics.confusion_matrix(labels[-100:], log_reg_pred))
 
-"""
+
 naive_bayes.fit(features[:-100], labels[:-100])
 print(naive_bayes)
 nb_pred = naive_bayes.predict(features[-100:])
@@ -60,4 +60,4 @@ svm_pred = svm.predict(features[-100:])
 print 'Support Vector Machine Results:'
 print '- - - - - - - - - - - - - - - - - - - - - - - - - - - -'
 print(metrics.classification_report(labels[-100:], svm_pred))
-print(metrics.confusion_matrix(labels[-100:], svm_pred))"""
+print(metrics.confusion_matrix(labels[-100:], svm_pred))
