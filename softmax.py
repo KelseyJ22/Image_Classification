@@ -6,8 +6,6 @@ import argparse
 import sys
 import utils
 
-from tensorflow.examples.tutorials.mnist import input_data
-
 import tensorflow as tf
 
 FLAGS = None
@@ -28,16 +26,17 @@ def train(test_data, test_labels):
   sess = tf.InteractiveSession()
   tf.global_variables_initializer().run()
 
-  batched = utils.generate_batches(train_data, train_labels, batch_size = 500)
-  print('number of batches', len(batched))
-  i = 0
-  for batch in batched:
-    if i % 10 == 0:
-      print('running batch', i, '...')
-    i += 1
-    batch_xs = batch[0]
-    batch_ys = batch[1]
-    sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
+  for epoch in range(0, 10):
+    print('epoch', epoch)
+    batched = utils.generate_batches(train_data, train_labels, batch_size = 100)
+    i = 0
+    for batch in batched:
+      if i % 10 == 0:
+        print('running batch', i, '...')
+        train_accuracy = accuracy.eval(feed_dict={x: batch[0], y_: batch[1]})
+        print('step %d, training accuracy %g' % (i, train_accuracy))
+      sess.run(train_step, feed_dict={x: batch[0], y_: batch[1]})
+      i += 1
 
   return sess, y, y_, x
 
@@ -47,8 +46,6 @@ def test(sess, y, y_, test_data, test_labels, x):
   print(sess.run(accuracy, feed_dict={x: test_data, y_: test_labels}))
 
 data, labels = utils.read_from_csv(one_hot = True, filename = './data/fashion-mnist_train.csv')
-print('data shape', data.shape)
-print('labels shape', labels.shape)
 train_data = data[:-train_test_split]
 train_labels = labels[:-train_test_split]
 test_data = data[-train_test_split:]
