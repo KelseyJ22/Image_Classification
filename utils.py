@@ -21,6 +21,21 @@ def pre_process_image(image):
     return image
 """
 
+def generate_batches(data, labels, batch_size):
+    p = np.random.permutation(labels.shape[0])
+    new_labels = labels[p]
+    new_data = data[p]
+    start = 0
+    end = batch_size
+    results = list()
+    while end < labels.shape[0]:
+        results.append((new_data[start:end], new_labels[start:end]))
+        start = end
+        end += batch_size
+    results.append((new_data[end:], new_labels[end:]))
+    return results
+
+
 def read_from_csv(one_hot, filename):
     features = np.genfromtxt(filename, delimiter=',', skip_header=1, usecols=range(1, 785), dtype=np.float32)
     features = np.divide(features, 255.0)
