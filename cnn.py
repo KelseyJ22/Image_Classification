@@ -6,9 +6,10 @@ import argparse
 import sys
 import tempfile
 
-from tensorflow.examples.tutorials.mnist import input_data
-
+import utils
 import tensorflow as tf
+
+train_test_split = 6000
 
 FLAGS = None
 
@@ -129,19 +130,18 @@ def main(_):
     print('number of batches', len(batched))
     i = 0
     for batch in batched:
-    if i % 10 == 0:
-      train_accuracy = accuracy.eval(feed_dict={x: batch[0], y_: batch[1], keep_prob: 1.0})
-      print('step %d, training accuracy %g' % (i, train_accuracy))
-    i += 1
+      if i % 10 == 0:
+        train_accuracy = accuracy.eval(feed_dict={x: batch[0], y_: batch[1], keep_prob: 1.0})
+        print('step %d, training accuracy %g' % (i, train_accuracy))
+      i += 1
 
     train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
 
 
-    print('test accuracy %g' % accuracy.eval(feed_dict={
-        x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))
+    print('test accuracy %g' % accuracy.eval(feed_dict={x: test_data, y_: test_labels, keep_prob: 1.0}))
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
-  parser.add_argument('--data_dir', type=str, default='/tmp/tensorflow/mnist/input_data', help='Directory for storing input data')
+  parser.add_argument('--data', type=str, default='./data/fashion-mnist_train.csv', help='input data')
   FLAGS, unparsed = parser.parse_known_args()
   tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
