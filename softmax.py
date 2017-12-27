@@ -14,15 +14,7 @@ FLAGS = None
 
 train_test_split = 6000
 
-def main(_):
-  data, labels = utils.read_from_csv(one_hot = True, filename = './data/fashion-mnist_train.csv')
-  print('data shape', data.shape)
-  print('labels shape', labels.shape)
-  train = data[:-train_test_split]
-  train_labels = labels[:-train_test_split]
-  test = data[-train_test_split:]
-  test_labels = labels[-train_test_split:]
-
+def train(test_data, test_labels):
   x = tf.placeholder(tf.float32, [None, 784])
   W = tf.Variable(tf.zeros([784, 10]))
   b = tf.Variable(tf.zeros([10]))
@@ -36,26 +28,30 @@ def main(_):
   sess = tf.InteractiveSession()
   tf.global_variables_initializer().run()
 
-  # train
-  batched = utils.generate_batches(train, train_labels, batch_size = 500)
+  batched = utils.generate_batches(train_data, train_labels, batch_size = 500)
   print('number of batches', len(batched))
   i = 0
   for batch in batched:
-    print('running batch', i)
+    if i % 10 == 0:
+      print('running batch', i, '...')
     i += 1
     batch_xs = batch[0]
     batch_ys = batch[1]
     sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
 
-  print('all batches run')
+  return sess, y, y_, x
 
-  # test
+def test(sess, y, y_, test_data, test_labels, x):
   correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
   accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-  print(sess.run(accuracy, feed_dict={x: test, y_: test_labels}))
+  print(sess.run(accuracy, feed_dict={x: test_data, y_: test_labels}))
 
-if __name__ == '__main__':
-  parser = argparse.ArgumentParser()
-  parser.add_argument('--data', type=str, default='./data/fashion-mnist_train.csv', help='input data')
-  FLAGS, unparsed = parser.parse_known_args()
-  tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+data, labels = utils.read_from_csv(one_hot = True, filename = './data/fashion-mnist_train.csv')
+print('data shape', data.shape)
+print('labels shape', labels.shape)
+train_data = data[:-train_test_split]
+train_labels = labels[:-train_test_split]
+test_data = data[-train_test_split:]
+test_labels = labels[-train_test_split:]
+sess, y, y_, x = train(train_data, train_labels)
+test(sess, y, y_, test_data, test_labels, x)
