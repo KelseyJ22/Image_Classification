@@ -126,14 +126,16 @@ def main(_):
 
   with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    batched = utils.generate_batches(train_data, train_labels, batch_size = 50)
-    print('number of batches', len(batched))
-    i = 0
-    for batch in batched:
-      if i % 10 == 0:
-        train_accuracy = accuracy.eval(feed_dict={x: batch[0], y_: batch[1], keep_prob: 1.0})
-        print('step %d, training accuracy %g' % (i, train_accuracy))
-      i += 1
+    for epoch in range(0, 10):
+      print('epoch', epoch)
+      # regenerate batches in each epoch
+      batched = utils.generate_batches(train_data, train_labels, batch_size = 50)
+      i = 0
+      for batch in batched:
+        if i % 100 == 0:
+          train_accuracy = accuracy.eval(feed_dict={x: batch[0], y_: batch[1], keep_prob: 1.0})
+          print('step %d, training accuracy %g' % (i, train_accuracy))
+        i += 1
 
     train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
 
