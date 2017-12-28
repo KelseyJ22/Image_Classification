@@ -8,6 +8,7 @@ import tempfile
 
 import utils
 import tensorflow as tf
+import matplotlib.pyplot as plt
 
 train_test_split = 6000
 
@@ -124,6 +125,8 @@ def main(_):
   train_writer = tf.summary.FileWriter(graph_location)
   train_writer.add_graph(tf.get_default_graph())
 
+  accuracies = list()
+  iterations = list()
   with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     for epoch in range(0, 10):
@@ -135,10 +138,14 @@ def main(_):
         if i % 100 == 0:
           train_accuracy = accuracy.eval(feed_dict={x: batch[0], y_: batch[1], keep_prob: 1.0})
           print('step %d, training accuracy %g' % (i, train_accuracy))
+          accuracies.append(train_accuracy)
+          iterations.append(epoch * i)
         i += 1
         train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
 
     print('test accuracy %g' % accuracy.eval(feed_dict={x: test_data, y_: test_labels, keep_prob: 1.0}))
+    plt.plot(accuracies, iterations)
+    plt.show()
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()

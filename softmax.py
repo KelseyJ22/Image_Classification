@@ -33,8 +33,6 @@ def train(test_data, test_labels):
     for batch in batched:
       if i % 10 == 0:
         print('running batch', i, '...')
-        train_accuracy = accuracy.eval(feed_dict={x: batch[0], y_: batch[1]})
-        print('step %d, training accuracy %g' % (i, train_accuracy))
       sess.run(train_step, feed_dict={x: batch[0], y_: batch[1]})
       i += 1
 
