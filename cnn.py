@@ -129,7 +129,9 @@ def main(_):
   iterations = list()
   with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    for epoch in range(0, 10):
+    score = 0
+    epoch = 0
+    while True:
       print('epoch', epoch)
       # regenerate batches in each epoch
       batched = utils.generate_batches(train_data, train_labels, batch_size = 50)
@@ -139,13 +141,18 @@ def main(_):
           train_accuracy = accuracy.eval(feed_dict={x: batch[0], y_: batch[1], keep_prob: 1.0})
           print('step %d, training accuracy %g' % (i, train_accuracy))
           accuracies.append(train_accuracy)
-          iterations.append(epoch * i)
+          iterations.append(epoch * 100 + i)
+          if train_accuracy >= 0.96:
+            break
         i += 1
         train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
+        epoch += 1
 
     print('test accuracy %g' % accuracy.eval(feed_dict={x: test_data, y_: test_labels, keep_prob: 1.0}))
-    plt.plot(accuracies, iterations)
-    plt.show()
+    print(accuracies)
+    print(iterations)
+    #plt.plot(accuracies, iterations)
+    #plt.show()
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
