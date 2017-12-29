@@ -3,7 +3,7 @@ from PIL import Image
 import scipy.misc as smp
 import utils
 
-k_vals = [10, 20]
+k_vals = [10, 20, 25]
 			
 def compress():
 	images, _ = utils.read_from_csv(False, './data/fashion-mnist_train.csv')
