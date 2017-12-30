@@ -62,15 +62,8 @@ def cnn(x):
   return y_pred, keep_prob
 
 
-def main(_):
-  data, labels = utils.read_from_csv(one_hot = True, filename = './data/fashion-mnist_train.csv')
-  print('data shape', data.shape)
-  print('labels shape', labels.shape)
-  train_data = data[:-train_test_split]
-  train_labels = labels[:-train_test_split]
-  test_data = data[-train_test_split:]
-  test_labels = labels[-train_test_split:]
 
+def run_model(train_data, train_labels, test_data, test_labels):
   x = tf.placeholder(tf.float32, [None, 784])
   y_ = tf.placeholder(tf.float32, [None, 10])
   y_pred, keep_prob = cnn(x)
@@ -96,7 +89,7 @@ def main(_):
   iterations = list()
   with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    for epoch in range(0, 2):
+    for epoch in range(0, 4):
       print('epoch', epoch)
       # regenerate batches in each epoch
       batched = utils.generate_batches(train_data, train_labels, batch_size = 50)
@@ -117,8 +110,20 @@ def main(_):
     #plt.plot(accuracies, iterations)
     #plt.show()
 
-if __name__ == '__main__':
-  parser = argparse.ArgumentParser()
-  parser.add_argument('--data', type=str, default='./data/fashion-mnist_train.csv', help='input data')
-  FLAGS, unparsed = parser.parse_known_args()
-  tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+def split_train_test():
+  data, labels = utils.read_from_csv(one_hot = True, filename = './data/fashion-mnist_train.csv')
+  train_data = data[:-train_test_split]
+  train_labels = labels[:-train_test_split]
+  test_data = data[-train_test_split:]
+  test_labels = labels[-train_test_split:]
+
+  run_model(train_data, train_labels, test_data, test_labels)
+
+def compressed_test():
+  train_data, train_labels = utils.read_from_csv(one_hot = True, filename = './data/fashion-mnist_train.csv')
+  test_data, test_labels = utils.read_from_csv(one_hot = True, filename = './data/10.csv')
+
+  run_model(train_data, train_labels, test_data[0:10000], test_labels[0:10000])
+
+#split_train_test()
+compressed_test()

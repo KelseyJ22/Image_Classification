@@ -6,7 +6,7 @@ import utils
 k_vals = [10, 20, 25]
 			
 def compress():
-	images, _ = utils.read_from_csv(False, './data/fashion-mnist_train.csv')
+	images, labels = utils.read_from_csv(False, './data/fashion-mnist_train.csv')
 	for k in k_vals:
 		o = open(str(k) + '.csv', 'w')
 		compressed = np.zeros(images.shape)
@@ -14,6 +14,7 @@ def compress():
 			if i % 1000 == 0:
 				print i
 			img = np.reshape(images[i], (28,28))
+			lbl = labels[i]
 			u, d, v = np.linalg.svd(img, full_matrices=True, compute_uv=True)
 			d = np.diag(d)
 
@@ -24,18 +25,16 @@ def compress():
 			k_approx = np.matmul(np.matmul(uk, dk), vk)
 			k_approx_rescaled = (k_approx - np.min(k_approx))/(np.max(k_approx) - np.min(k_approx)) # rescale values to fit between 0 and 1
 			shrunk = np.uint8(k_approx_rescaled*255)
-			#print(shrunk.shape)
 			#im = Image.fromarray(shrunk)
 			#im.show()
 			to_save = np.reshape(shrunk, (1, 784))
-			output = ''
+			output = str(lbl)
 			for entry in to_save:
 				for elem in entry:
 					output += str(elem)
 					output += ','
 				output = output[:-1]
 				output += '\n'
-				print output
 				o.write(output)
 			
 	o.close()
