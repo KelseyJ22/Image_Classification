@@ -3,7 +3,7 @@ from PIL import Image
 import scipy.misc as smp
 import utils
 
-k_vals = [10, 20, 25]
+k_vals = [10]
 			
 def compress():
 	images, labels = utils.read_from_csv(False, './data/fashion-mnist_train.csv')
@@ -13,6 +13,7 @@ def compress():
 		for i in range(0, images.shape[0]):
 			if i % 1000 == 0:
 				print i
+				break
 			img = np.reshape(images[i], (28,28))
 			lbl = labels[i]
 			u, d, v = np.linalg.svd(img, full_matrices=True, compute_uv=True)
@@ -28,7 +29,7 @@ def compress():
 			#im = Image.fromarray(shrunk)
 			#im.show()
 			to_save = np.reshape(shrunk, (1, 784))
-			output = str(lbl)
+			output = str(lbl) + ','
 			for entry in to_save:
 				for elem in entry:
 					output += str(elem)

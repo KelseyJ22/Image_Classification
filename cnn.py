@@ -111,7 +111,7 @@ def run_model(train_data, train_labels, test_data, test_labels):
     #plt.show()
 
 def split_train_test():
-  data, labels = utils.read_from_csv(one_hot = True, filename = './data/fashion-mnist_train.csv')
+  data, labels = utils.read_from_csv(one_hot = True, filename = './data/fashion-mnist_train.csv', header = 1)
   train_data = data[:-train_test_split]
   train_labels = labels[:-train_test_split]
   test_data = data[-train_test_split:]
@@ -120,10 +120,10 @@ def split_train_test():
   run_model(train_data, train_labels, test_data, test_labels)
 
 def compressed_test():
-  train_data, train_labels = utils.read_from_csv(one_hot = True, filename = './data/fashion-mnist_train.csv')
-  test_data, test_labels = utils.read_from_csv(one_hot = True, filename = './data/10.csv')
+  train_data, train_labels = utils.read_from_csv(one_hot = True, filename = './data/fashion-mnist_train.csv', header = 1)
+  test_data, test_labels = utils.read_from_csv(one_hot = True, filename = './data/10.csv', header = 0)
 
-  run_model(train_data, train_labels, test_data[0:10000], test_labels[0:10000])
+  run_model(train_data, train_labels, test_data, test_labels)
 
 #split_train_test()
 compressed_test()

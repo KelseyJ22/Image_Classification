@@ -36,11 +36,11 @@ def generate_batches(data, labels, batch_size):
     return results
 
 
-def read_from_csv(one_hot, filename):
-    features = np.genfromtxt(filename, delimiter=',', skip_header=1, usecols=range(1, 785), dtype=np.float32)
+def read_from_csv(one_hot, filename, header):
+    features = np.genfromtxt(filename, delimiter=',', skip_header = header, usecols=range(1, 785), dtype=np.float32)
     features = np.divide(features, 255.0)
 
-    labels_original = np.genfromtxt(filename, delimiter=',', skip_header=1, usecols=0, dtype=np.int)
+    labels_original = np.genfromtxt(filename, delimiter=',', skip_header = header, usecols=0, dtype=np.int)
     if one_hot:
         labels = np.zeros([len(labels_original), 10])
         labels[np.arange(len(labels_original)), labels_original] = 1
@@ -48,6 +48,3 @@ def read_from_csv(one_hot, filename):
         return features, labels
     else:
         return features, labels_original
-
-
-features, labels = read_from_csv(False, './data/fashion-mnist_train.csv')
