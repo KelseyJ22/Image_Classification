@@ -89,7 +89,7 @@ def run_model(train_data, train_labels, test_data, test_labels):
   iterations = list()
   with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    for epoch in range(0, 4):
+    for epoch in range(0, 1):
       print('epoch', epoch)
       # regenerate batches in each epoch
       batched = utils.generate_batches(train_data, train_labels, batch_size = 50)

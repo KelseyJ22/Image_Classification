@@ -154,3 +154,6 @@ avg / total       0.85      0.83      0.83       100
  [ 0  0  0  0  0  0  0  9  0  2]
  [ 0  0  0  0  0  0  0  0 15  0]
  [ 0  0  0  0  0  0  0  0  0  8]]
+
+ CONVOLUTIONAL NEURAL NETWORK
+ ![Alt text](relative/path/to/accuracy.png?raw=true "Accuracy")
