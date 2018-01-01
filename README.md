@@ -156,4 +156,8 @@ avg / total       0.85      0.83      0.83       100
  [ 0  0  0  0  0  0  0  0  0  8]]
 
  CONVOLUTIONAL NEURAL NETWORK
+ No image compression: test accuracy 0.856333
+ Images compressed to 10px: test accuracy 0.855067
+ Images compressed to 20px: test accuracy 0.870383
+ Images compressed to 25pm: test accuracy 0.865733
  ![Alt text](accuracy.png?raw=true "Accuracy")
