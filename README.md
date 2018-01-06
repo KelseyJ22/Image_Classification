@@ -1,5 +1,16 @@
 # Image_Classification
-Fashion MNIST dataset
+This repo contains various models to classify the "Fashion MNIST" dataset as presented on Kaggle, which is a set of 28x28 images of articles of clothing classified by type.
+
+scipy_classifier.py contains Logistic Regression, Naive Bayes, K Nearest Neighbor, Decision Tree, and Support Vector Machine classifiers using SciKitLearn's handy machine learning toolkit to classifier these images. "python scipy_classifier.py"
+
+softmax.py is a very basic feedforward neural network softmax classifier in TensorFlow. This requires python 2 and TensorFlow to run. "python softmax.py"
+
+cnn.py is a Convolutional Neural Network adapted from the TensorFlow example CNN for traditional MNIST digits. "python cnn.py"
+
+With this project, after developing various classifiers and verifying that they basically worked, I compressed the images further and then expanded the compressed images back to the normal 28x28 size (so same dimensions, but more pixelated), and attempted to classify these images. I compressed the images using SVD approximation to 10, 20, and 25 pixels.
+
+RESULTS
+------------------------------------------------------------
 
 BASELINE
 LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
